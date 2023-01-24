@@ -14,4 +14,4 @@ Tech stack:
 
 The backend is hosted on https://cvwo-project.onrender.com/ and frontend is hosted on https://main--dreamy-dodol-f0dd1c.netlify.app/.
 
-See https://github.com/jxunze/CVWO-project-dockerised.git for dockerised version.
+See https://github.com/jxunze/CVWO-project-dockerised for dockerised version.
