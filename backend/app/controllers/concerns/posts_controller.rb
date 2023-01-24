@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   def create
     auth_header = request.headers["Authorization"]
     user_token = auth_header.split(" ")[1]
-    @user_id = JWT.decode(user_token, Rails.application.secrets.secret_key_base[0])[0]["user_id"]
+    @user_id = JWT.decode(user_token, ENV['SECRET_KEY_BASE'])[0]["user_id"]
     post = Post.create!(title:post_params["title"], body:post_params["body"], user_id: @user_id)
     if post
       render json: post
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     auth_header = request.headers["Authorization"]
     user_token = auth_header.split(" ")[1]
     post = Post.find(params[:id])
-    @user_id = JWT.decode(user_token, Rails.application.secrets.secret_key_base[0])[0]["user_id"]
+    @user_id = JWT.decode(user_token, ENV['SECRET_KEY_BASE'])[0]["user_id"]
     if post.user.id != @user_id
       render json: {
         error: "Unauthorised user",
@@ -57,7 +57,7 @@ class PostsController < ApplicationController
     auth_header = request.headers["Authorization"]
     user_token = auth_header.split(" ")[1]
     post = Post.find(params[:id])
-    @user_id = JWT.decode(user_token, Rails.application.secrets.secret_key_base[0])[0]["user_id"]
+    @user_id = JWT.decode(user_token, ENV['SECRET_KEY_BASE'])[0]["user_id"]
     if post.user.id != @user_id
       render json: {
         error: "Unauthorised user",

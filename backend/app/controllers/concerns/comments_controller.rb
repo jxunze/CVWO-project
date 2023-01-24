@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
   def create
     auth_header = request.headers["Authorization"]
     user_token = auth_header.split(" ")[1]
-    @user_id = JWT.decode(user_token, Rails.application.secrets.secret_key_base[0])[0]["user_id"]
+    @user_id = JWT.decode(user_token, ENV['SECRET_KEY_BASE'])[0]["user_id"]
     post = Post.find(comment_params["post_id"])
     comment = post.comments.create!(body: comment_params["body"],user_id: @user_id)
     if comment
@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
     auth_header = request.headers["Authorization"]
     user_token = auth_header.split(" ")[1]
     comment = Comment.find(params[:id])
-    @user_id = JWT.decode(user_token, Rails.application.secrets.secret_key_base[0])[0]["user_id"]
+    @user_id = JWT.decode(user_token, ENV['SECRET_KEY_BASE'])[0]["user_id"]
     if comment.user.id != @user_id
       render json: {
         error: "Unauthorised user",
